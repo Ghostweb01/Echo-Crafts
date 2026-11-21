@@ -1,0 +1,6 @@
+{
+  "name": "SautiLearn — Spoken Practical Skills",
+  "description": "Offline-first spoken lessons in local languages for bookkeeping, sustainable farming, and digital basics with progress tracking and voice-to-text verification.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
