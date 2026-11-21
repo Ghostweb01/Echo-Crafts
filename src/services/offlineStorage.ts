@@ -24,6 +24,14 @@ export const DEFAULT_PROGRESS: LearnerProgress = {
 function openDB(): Promise<IDBDatabase | null> {
   if (typeof indexedDB === 'undefined') return Promise.resolve(null);
   return new Promise((resolve) => {
+    let settled = false;
+    const finish = (db: IDBDatabase | null) => {
+      if (!settled) {
+        settled = true;
+        resolve(db);
+      }
+    };
+    const timer = globalThis.setTimeout(() => finish(null), 1000);
     try {
       const req = indexedDB.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = () => {
@@ -38,10 +46,21 @@ function openDB(): Promise<IDBDatabase | null> {
           db.createObjectStore(STORE_AUDIO);
         }
       };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => resolve(null);
+      req.onsuccess = () => {
+        globalThis.clearTimeout(timer);
+        finish(req.result);
+      };
+      req.onerror = () => {
+        globalThis.clearTimeout(timer);
+        finish(null);
+      };
+      req.onblocked = () => {
+        globalThis.clearTimeout(timer);
+        finish(null);
+      };
     } catch {
-      resolve(null);
+      globalThis.clearTimeout(timer);
+      finish(null);
     }
   });
 }

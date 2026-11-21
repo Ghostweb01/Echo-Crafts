@@ -34,7 +34,11 @@ export default function App() {
   const [hydrated, setHydrated] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window === 'undefined') return 'light';
-    return localStorage.getItem('echocraft_theme') === 'dark' ? 'dark' : 'light';
+    try {
+      return localStorage.getItem('echocraft_theme') === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
   });
 
   const isOffline = !isDeviceOnline || simulatedOffline;
@@ -67,16 +71,34 @@ export default function App() {
       }
     }
 
+    let cancelled = false;
+    const timeoutId = window.setTimeout(() => {
+      if (!cancelled) {
+        setHydrated(true);
+      }
+    }, 1500);
+
     Promise.all([loadProgress(), loadOfflinePacks()])
       .then(([loadedProgress, loadedPacks]) => {
+        if (cancelled) return;
         setProgress(loadedProgress);
         setActiveLessonId(loadedProgress.lastOpenedLessonId || 'bk-1');
         setOfflinePacks(loadedPacks);
         setHydrated(true);
       })
       .catch(() => {
-        setHydrated(true);
+        if (!cancelled) {
+          setHydrated(true);
+        }
+      })
+      .finally(() => {
+        window.clearTimeout(timeoutId);
       });
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
   }, []);
 
   const updateAndPersistProgress = (updater: (prev: LearnerProgress) => LearnerProgress) => {
