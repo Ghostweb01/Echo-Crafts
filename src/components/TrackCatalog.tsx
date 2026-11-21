@@ -14,6 +14,7 @@ import {
 import { ALL_LESSONS, LANGUAGES, SKILL_TRACKS } from '../data/curriculum';
 import { LanguageCode, LearnerProgress, OfflinePackState, TrackId } from '../types/curriculum';
 import { calculateStreakDays } from '../services/offlineStorage';
+import heroPracticalImg from '../assets/images/hero_practical_learning_1795231031057.jpg';
 
 interface TrackCatalogProps {
   language: LanguageCode;
@@ -137,7 +138,7 @@ export const TrackCatalog: React.FC<TrackCatalogProps> = ({
         <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-[#E2E7E4] dark:border-[#28342E] bg-[#E5EBE7] dark:bg-[#1C2521] min-h-[260px] lg:min-h-full">
           {!heroImgFailed ? (
             <img
-              src="/src/assets/images/hero_practical_learning_1795231031057.jpg"
+              src={heroPracticalImg}
               alt="Community learning table with open bookkeeping ledger, maize seedlings, and voice lesson phone"
               referrerPolicy="no-referrer"
               onError={() => setHeroImgFailed(true)}

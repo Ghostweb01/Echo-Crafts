@@ -54,14 +54,29 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    registerSW({ immediate: true });
+    if ('serviceWorker' in navigator) {
+      try {
+        registerSW({
+          immediate: true,
+          onRegisterError() {
+            // Ignore service worker registration failures in restricted environments
+          },
+        });
+      } catch {
+        // Ignore synchronous registration errors
+      }
+    }
 
-    Promise.all([loadProgress(), loadOfflinePacks()]).then(([loadedProgress, loadedPacks]) => {
-      setProgress(loadedProgress);
-      setActiveLessonId(loadedProgress.lastOpenedLessonId || 'bk-1');
-      setOfflinePacks(loadedPacks);
-      setHydrated(true);
-    });
+    Promise.all([loadProgress(), loadOfflinePacks()])
+      .then(([loadedProgress, loadedPacks]) => {
+        setProgress(loadedProgress);
+        setActiveLessonId(loadedProgress.lastOpenedLessonId || 'bk-1');
+        setOfflinePacks(loadedPacks);
+        setHydrated(true);
+      })
+      .catch(() => {
+        setHydrated(true);
+      });
   }, []);
 
   const updateAndPersistProgress = (updater: (prev: LearnerProgress) => LearnerProgress) => {

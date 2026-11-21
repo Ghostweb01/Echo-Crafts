@@ -1,4 +1,7 @@
 import { LanguageMeta, SkillTrack, TrackId, Lesson } from '../types/curriculum';
+import trackBookkeepingImg from '../assets/images/track_bookkeeping_1795231030985.jpg';
+import trackFarmingImg from '../assets/images/track_farming_1795231031289.jpg';
+import trackDigitalBasicsImg from '../assets/images/track_digital_basics_1795231030790.jpg';
 
 export const LANGUAGES: LanguageMeta[] = [
   {
@@ -86,7 +89,7 @@ export const SKILL_TRACKS: SkillTrack[] = [
       es: 'Separa el dinero del hogar del negocio, registra ventas diarias y calcula la ganancia real.',
       hi: 'घर के खर्च को दुकान के पैसे से अलग रखें, रोज़ की बिक्री लिखें और असली मुनाफा निकालें।',
     },
-    imageUrl: '/src/assets/images/track_bookkeeping_1795231030985.jpg',
+    imageUrl: trackBookkeepingImg,
     packSizeKb: 420,
     lessons: [
       {
@@ -456,7 +459,7 @@ export const SKILL_TRACKS: SkillTrack[] = [
       es: 'Capta agua de lluvia en hoyos Zai, prepara abono orgánico y protege cultivos naturalmente.',
       hi: 'ज़ाई गड्ढों से बारिश का पानी बचाएं, जैविक खाद बनाएं और प्राकृतिक तरीकों से फसल की रक्षा करें।',
     },
-    imageUrl: '/src/assets/images/track_farming_1795231031289.jpg',
+    imageUrl: trackFarmingImg,
     packSizeKb: 485,
     lessons: [
       {
@@ -750,7 +753,7 @@ export const SKILL_TRACKS: SkillTrack[] = [
       es: 'Protege tu PIN móvil, verifica comprobantes de pago y ahorra datos sin conexión.',
       hi: 'अपना मोबाइल पिन सुरक्षित रखें, भुगतान रसीद की जांच करें और इंटरनेट डेटा बचाएं।',
     },
-    imageUrl: '/src/assets/images/track_digital_basics_1795231030790.jpg',
+    imageUrl: trackDigitalBasicsImg,
     packSizeKb: 390,
     lessons: [
       {
